@@ -387,41 +387,20 @@ public class Cine {
 
 	//*********************************************************
 	//PAGAMENT DE N ENTRADES
-	synchronized boolean pagamentEntradesFil(DataInputStream dataInputStream, DataOutputStream dataOutputStream, ArrayList<Seient> seientsAcomprar, BigDecimal preu) throws IOException{
-		String mensaje = "";
-		boolean respuesta = false;
-		// Mandamos el mensaje de pago
-		mensaje += "\tImport a pagar: "+new BigDecimal(seientsAcomprar.size()).multiply(preu)+" €";
-		mensaje += "\n\tPagant";
-		dataOutputStream.writeUTF(mensaje);
-		
-		// Hacemos la espera de los puntos suspensivos
-		for (int i=0; i<3; i++) {
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			mensaje = ".";
-			dataOutputStream.writeUTF(mensaje);
-		}//for
+	synchronized boolean pagamentEntradesFil(ArrayList<Seient> seientsAcomprar, Sessio sessio) throws IOException{
 		
 		//Valida una vegada més si algun fil s'ha adelantat
 		///////////inici de SYNCHRONIZED ////////////////////
 		/////////////////////////////////////////////////////
 		synchronized(this) {
 			for (int i=0; i<seientsAcomprar.size();i++) {
-				if(!seientsAcomprar.get(i).verificaSeient())
+				int fila = seientsAcomprar.get(i).getFilaSeient();
+				int columna = seientsAcomprar.get(i).getNumeroSeient();
+				if(!sessio.getSeients()[fila][columna].verificaSeient())
 					return false;
 			}
-			// Mandamos la pregunta
-			mensaje = "\tPagat? (S/N)";
-			dataOutputStream.writeUTF(mensaje);
-			
-			// Devolvemos la respuesta que nos manda el cliente
-			respuesta = dataInputStream.readBoolean();
-			return respuesta;
+		
+			return true;
 		}//synchronized
 		/////////////////////////////////////////////////////
 		///////////final de SYNCHRONIZED //////////////////
@@ -432,13 +411,14 @@ public class Cine {
 	//OCUPACIO DE N SEIENTS
 	///////////inici de SYNCHRONIZED ////////////////////
 	/////////////////////////////////////////////////////
-	synchronized String ocupaSeients(ArrayList<Seient> seientsAcomprar) {
-		String mensaje = "";
+	synchronized void ocupaSeients(ArrayList<Seient> seientsAcomprar, Sessio sessio) {
+		
 		for (int i=0; i < seientsAcomprar.size(); i++) {
-			seientsAcomprar.get(i).ocupaSeient(); // ocupa seient
-			mensaje += "\n\tSeient ["+(seientsAcomprar.get(i).getFilaSeient()+ 1 )+"]["+(seientsAcomprar.get(i).getNumeroSeient() + 1)+"] OCUPAT";
-		}//for
-		return mensaje;
+			int fila = seientsAcomprar.get(i).getFilaSeient();
+			int columna = seientsAcomprar.get(i).getNumeroSeient();
+			sessio.getSeients()[fila][columna].ocupaSeient();
+		}
+
 	}//ocupaSeients
 	/////////////////////////////////////////////////////
 	///////////final de SYNCHRONIZED //////////////////

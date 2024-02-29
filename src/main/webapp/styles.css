@@ -1,0 +1,65 @@
+@charset "UTF-8";
+
+h1 {
+	background: gray;
+	color: white;
+	text-align: center;
+}
+
+.contenedor {
+	background: salmon;
+	width: 800px;
+	margin: auto;
+	padding: 20px;
+}
+
+.sala {
+	background: #DDDDDD;
+	margin: 20px;
+	width: fit-content;
+	padding: 10px;
+	border: 1px solid black;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+}
+
+.fila {
+	margin: 20px;
+	display: flex;
+	flex-direction: row;
+}
+
+.butaca-libre {
+	margin: 10px;
+	background-color: green;
+}
+
+.butaca-ocupada {
+	margin: 10px;
+	background-color: red;
+}
+
+.seleccion {
+	font-size: 2rem;
+}
+
+form {
+	text-align: center;
+}
+
+.fase {
+	background: gold;
+	padding: 20px;
+	font-size: 2rem;
+	text-align: center;
+}
+
+.ticket {
+	margin: 20px;
+	background: white;
+	width: fit-content;
+	padding: 10px;
+	border: 1px solid black;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+}

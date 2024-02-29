@@ -198,15 +198,14 @@ public class Sessio {
 	//Mostra TICKET de compra de la PELICULA
 	public synchronized String imprimirTicket(Seient s, Sessio se, Sala sa, Pelicula p){
 		String mensaje = "";
-		mensaje += "\n\tImprimint el seu Ticket...";
-		mensaje += "\n\t***************************";
-		mensaje += "\n\t* ***TICKET ENTRADA *******";
-		mensaje += "\n\t* PELICULA: "+ p.getNomPeli() +" *";
-		mensaje += "\n\t* HORARI: ";
-		mensaje += se.mostraDataFormatada();
-		mensaje += " *\n\t* Seient FILA:"+(s.getFilaSeient()+1)+ " SEIENT:"+(s.getNumeroSeient()+1)+" *";
-		mensaje += "\n\t* Preu: "+ se.getPreu()+" € *";
-		mensaje += "\n\t****************************\n";
+		
+		mensaje += "<p> TICKET ENTRADA </p>";
+		mensaje += "<p> PELICULA: "+ p.getNomPeli() +"</p>";
+		mensaje += "<p> HORARI: " + se.mostraDataFormatada() + "</p>";
+		mensaje += "<p> Seient FILA:"+(s.getFilaSeient()+1)+ "</p>";
+		mensaje	+= "<p> SEIENT:"+(s.getNumeroSeient()+1)+"</p>";
+		mensaje += "<p> Preu: "+ se.getPreu()+" € *";
+		
 		return mensaje;
 	}//imprimirTicket
 
